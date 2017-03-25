@@ -1,6 +1,6 @@
 Convert any spreadsheet into a Python internal dict/array data structure, for easy processing. Can also handle pivot tables. 
 
-For pivot table usage, header_row_start & header_col_start need to be set equal to the top left corner of the table table => header_row_start=8, header_col_start='c' in the included example.
+For pivot table usage, header_row_start & header_col_start need to be set equal to the top left corner of the pivot table => header_row_start=8, header_col_start='c' in the included example.
 
 Column IDs must always be lowercase chars in quotes, e.g. 'a'.
 
