@@ -10,13 +10,13 @@ Example usage
 from easyxls import *
 
 ### Pivot Table example
-data_struct = get_spreadsheet(spreadsheet_path='janendra.xlsx', max_row=13, max_column='g', header_row_start=8, header_col_start='c', format='pivot')
+data_struct = get_spreadsheet(spreadsheet_path='', max_row=13, max_column='g', header_row_start=8, header_col_start='c', format='pivot')
 
 ### Column headings based example
-#data_struct = get_spreadsheet(spreadsheet_path='janendra.xlsx', max_row=13, max_column='g', header_row_start=8, header_col_start='d', format='column')
+#data_struct = get_spreadsheet(spreadsheet_path='', max_row=13, max_column='g', header_row_start=8, header_col_start='d', format='column')
 
 ### Row headings based example
-#data_struct = get_spreadsheet(spreadsheet_path='janendra.xlsx', max_row=13, max_column='g', header_row_start=9, header_col_start='c', format='row')
+#data_struct = get_spreadsheet(spreadsheet_path='', max_row=13, max_column='g', header_row_start=9, header_col_start='c', format='row')
 
 #########
 
