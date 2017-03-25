@@ -2,7 +2,7 @@ Convert any spreadsheet into a Python internal dict/array data structure, for ea
 
 Example usage
 ==========
-
+```python
 from easyxls import *
 
 ### Pivot Table example
@@ -29,3 +29,4 @@ if type(data_struct) == type({}):
 		print
 	# End For
 # End If
+```
