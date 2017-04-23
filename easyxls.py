@@ -3,18 +3,58 @@ import openpyxl
 
 ######################################################################################################################
 
+def column_id_to_int(id_string):
+	
+	id_list = list(id_string)
+	current_exponent = 0
+	current_sum = 0
+	
+	while len(id_list) > 0:
+		next_char_id = id_list.pop()
+		current_multiplier = 26 ** current_exponent
+		current_sum = current_sum + (current_multiplier * (ord(next_char_id) - 96))
+		current_exponent = current_exponent + 1
+	# End While
+	
+	return current_sum
+	
+# End Function
+######################################################################################################################
+
+def int_to_column_id(column_int):
+	
+	id_string = ""
+	current_sum = column_int
+	
+	while current_sum > 0:
+		current_remainder = current_sum % 26
+		
+		if current_remainder == 0:
+			current_sum = current_sum - 26
+			current_remainder = 26
+		# End If
+		
+		id_string = str(chr(current_remainder + 96)) + id_string
+		current_sum = int(current_sum/26)
+	# End While
+	
+	return id_string
+	
+# End Function
+######################################################################################################################
+
 def get_column_based_header_fields(max_column, header_row_start, header_col_start, ws):
 
 	header_array = {}
 
 	col_id = header_col_start
 	
-	while ord(col_id) <= ord(max_column):
+	while column_id_to_int(col_id) <= column_id_to_int(max_column):
 		try:                    
 			column_string = col_id + str(header_row_start)
 			val = str(ws[column_string].value)
 			header_array[col_id] = val
-			col_id = chr(ord(col_id) + 1)
+			col_id = int_to_column_id(column_id_to_int(col_id) + 1)
 		except:
 			break
 	# End While
@@ -59,7 +99,7 @@ def get_with_column_headings(spreadsheet_array, max_row, max_column, header_row_
 		col_id = header_col_start
 		new_dict = {}
 		
-		while ord(col_id)  <= ord(max_column):
+		while column_id_to_int(col_id)  <= column_id_to_int(max_column):
 			try:                    
 				column_string = col_id + str(row_num)
 				val = str(ws[column_string].value)
@@ -71,7 +111,7 @@ def get_with_column_headings(spreadsheet_array, max_row, max_column, header_row_
 					anonymous_header_count = anonymous_header_count + 1
 				# End If
 
-				col_id = chr(ord(col_id) + 1)
+				col_id = int_to_column_id(column_id_to_int(col_id) + 1)
 			except:
 				break
 		# End While
@@ -95,7 +135,7 @@ def get_with_row_headings(spreadsheet_array, max_row, max_column, header_row_sta
 	anonymous_header_count = 0
 
 	num_rows = ws.max_row
-	col_id = chr(ord(header_col_start) + 1)
+	col_id = int_to_column_id(column_id_to_int(header_col_start) + 1)
 
 	header_array = get_row_based_header_fields(max_row, header_row_start, header_col_start, ws)
 	finished = 0
@@ -123,10 +163,10 @@ def get_with_row_headings(spreadsheet_array, max_row, max_column, header_row_sta
 
 		spreadsheet_array.append(new_dict)
 		
-		if ord(col_id) >= ord(max_column):
+		if column_id_to_int(col_id) >= column_id_to_int(max_column):
 			finished = 1
 		else:
-			col_id = chr(ord(col_id) + 1)
+			col_id = int_to_column_id(column_id_to_int(col_id) + 1)
 		# End If
 
 	# End While
@@ -156,9 +196,9 @@ def get_with_pivot_table(spreadsheet_dict, max_row, max_column, header_row_start
 			anonymous_header_count = anonymous_header_count + 1
 		# End If
 		
-		col_id = chr(ord(header_col_start) + 1)
+		col_id = int_to_column_id(column_id_to_int(header_col_start) + 1)
 		
-		while ord(col_id) <= ord(max_column):
+		while column_id_to_int(col_id) <= column_id_to_int(max_column):
 			column_string = col_id + str(row_num)
 			val = str(ws[column_string].value)
 			
@@ -169,7 +209,7 @@ def get_with_pivot_table(spreadsheet_dict, max_row, max_column, header_row_start
 				anonymous_header_count = anonymous_header_count + 1
 			# End If
 		
-			col_id = chr(ord(col_id) + 1)
+			col_id = int_to_column_id(column_id_to_int(col_id) + 1)
 		# End While
 		
 		row_num = row_num + 1
